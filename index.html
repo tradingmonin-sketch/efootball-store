@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EFOOTBALL.STORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<div id="top" hidden>
+  <div class="lg" onclick="show('accueil')">⚽</div>
+  <div class="tt" onclick="show('accueil')"><b>EFOOTBALL<i>.STORE</i></b><small>GAMING MOBILE STORE</small></div>
+  <div class="wal" onclick="show('recharge')"><span id="top-solde">0 F</span><u>+</u></div>
+  <div class="avh" id="top-av" onclick="show('profil')">?</div>
+</div>
+
+<div id="chargement" class="page"><p>Chargement…</p></div>
+
+<div id="auth" class="page" hidden>
+  <div class="auth-box">
+    <div class="lg">⚽</div>
+    <h1 class="hh">EFOOTBALL<span class="g">.STORE</span></h1>
+    <p class="slogan">GAMING MOBILE STORE</p>
+    <div class="trio"><span>🛡️<br>Achats<br>protégés</span><span>💬<br>Chat<br>direct</span><span>🏆<br>Tournois</span></div>
+    <p class="sous" id="auth-sous">Connecte-toi pour continuer</p>
+    <div class="onglets">
+      <button id="tab-login" class="actif" onclick="modeAuth('login')">Connexion</button>
+      <button id="tab-signup" onclick="modeAuth('signup')">Inscription</button>
+    </div>
+    <div class="champ" id="ch-nom" hidden><span>👤</span><input id="nom" placeholder="Ton nom"></div>
+    <div class="champ"><span>📞</span><input id="tel" placeholder="Numéro de téléphone" inputmode="tel"></div>
+    <div class="champ"><span>🔒</span><input id="mdp" type="password" placeholder="Mot de passe" autocomplete="off"><b id="oeil" onclick="basculeMdp()">👁️</b></div>
+    <div class="champ" id="ch-mdp2" hidden><span>🔒</span><input id="mdp2" type="password" placeholder="Confirmer le mot de passe" autocomplete="off"></div>
+    <button class="go" id="btn-go" onclick="validerAuth()">Se connecter →</button>
+    <a class="aide" href="https://wa.me/2250501771816">Besoin d'aide ? Contacter le support</a>
+  </div>
+</div>
+
+<div id="accueil" class="page" hidden>
+  <div class="hero">
+    <span class="badge">EFOOTBALL MOBILE 2026</span>
+    <h1 class="hh">ACHÈTE, VENDS &amp; <span class="g">GAGNE</span> DES CASH</h1>
+    <p>Paiement protégé par séquestre, chat direct avec les vendeurs &amp; compétitions.</p>
+    <div class="hbtn">
+      <button onclick="show('publier')">＋ Publier Annonce</button>
+      <button class="sec2" onclick="show('recharge')">💳 Recharger Solde</button>
+    </div>
+  </div>
+  <div class="une">
+    <h3 class="hh">🔥 À la une</h3>
+    <select id="f-une" onchange="rendreUne()">
+      <option value="">Tout voir</option>
+      <option value="Vente">Ventes</option>
+      <option value="Échange">Échanges</option>
+    </select>
+  </div>
+  <div id="feed"></div>
+  <div class="une"><h3 class="hh">🏆 Tournois</h3><a class="lien" onclick="show('competition')">Voir tout</a></div>
+  <div id="feedt"></div>
+</div>
+
+<div id="boutique" class="page" hidden>
+  <div class="tete">
+    <div><h2 class="hh">BOUTIQUE <span class="g">COMPTES</span></h2><p class="sous2">Achat direct avec solde ou chat sécurisé interne</p></div>
+    <button class="pub" onclick="show('publier')">+<br>Publier</button>
+  </div>
+  <div class="chips">
+    <button class="on" data-f="" onclick="choisirFiltre('')">Tout</button>
+    <button data-f="Vente" onclick="choisirFiltre('Vente')">Ventes</button>
+    <button data-f="Échange" onclick="choisirFiltre('Échange')">Échanges</button>
+  </div>
+  <div id="liste"></div>
+</div>
+
+<div id="messages" class="page" hidden>
+  <div class="tete">
+    <div><h2 class="hh">MESSAGERIE <span class="g">DIRECTE</span></h2><p class="sous2">Discute avec les vendeurs sans quitter le site</p></div>
+    <span class="secu">🛡️ Sécurisé</span>
+  </div>
+  <p class="mut">Sélectionne une discussion :</p>
+  <div id="conv"></div>
+</div>
+
+<div id="chat" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('messages')">‹</button><div><b id="ch-nom-autre"></b><small id="ch-annonce"></small></div></div>
+  <div class="note">🔒 Pour acheter en sécurité, utilise le bouton Acheter : ton argent reste bloqué jusqu'à ta confirmation. Ne paie jamais en dehors du site.</div>
+  <button id="ch-achat" hidden onclick="acheter(S.chatAnnonce)">🔒 Acheter avec mon solde</button>
+  <div id="ch-msgs"></div>
+  <div class="saisie"><input id="ch-texte" placeholder="Écris ton message..." onkeydown="if(event.key==='Enter')envoyerMsg()"><button onclick="envoyerMsg()">Envoyer</button></div>
+</div>
+
+<div id="publier" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('boutique')">‹</button><h2 class="hh">Publier un <span class="g">compte</span></h2></div>
+  <div class="carte">
+    <select id="a-type"><option>Vente</option><option>Échange</option></select>
+    <input id="a-titre" placeholder="Titre (ex: Compte Div 1 Stacké 3100+)">
+    <input id="a-prix" placeholder="Vente : prix en chiffres (ex: 25000) — Échange : compte souhaité">
+    <textarea id="a-desc" rows="4" placeholder="Description : joueurs, coins, niveau..."></textarea>
+    <input id="a-wa" placeholder="Ton WhatsApp" inputmode="tel">
+    <label>📷 Photo 1 du compte</label>
+    <input id="a-img1" type="file" accept="image/*" onchange="apercu(this,'p1')">
+    <img id="p1" class="apercu" hidden>
+    <label>📷 Photo 2 du compte</label>
+    <input id="a-img2" type="file" accept="image/*" onchange="apercu(this,'p2')">
+    <img id="p2" class="apercu" hidden>
+    <button onclick="publier()">Publier</button>
+  </div>
+</div>
+
+<div id="competition" class="page" hidden>
+  <div class="tete">
+    <div><h2 class="hh">TOURNOIS <span class="b">&amp; LIGUES</span></h2><p class="sous2">Inscris-toi et affronte les meilleurs joueurs</p></div>
+    <button class="pub bleu admin-only" onclick="show('publiercomp')">+<br>Tournoi</button>
+  </div>
+  <div id="listecomp"></div>
+</div>
+
+<div id="publiercomp" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('competition')">‹</button><h2 class="hh">Publier un <span class="b">tournoi</span></h2></div>
+  <div class="carte">
+    <input id="t-titre" placeholder="Nom du tournoi">
+    <input id="t-date" placeholder="Date et heure (ex: Samedi à 20h00)">
+    <input id="t-frais" placeholder="Frais d'inscription (ex: 500 F ou Gratuit)">
+    <input id="t-lot" placeholder="À gagner (ex: 10 000 F)">
+    <textarea id="t-desc" rows="4" placeholder="Règles, nombre de places, mode de jeu..."></textarea>
+    <input id="t-wa" placeholder="WhatsApp de l'organisateur" value="2250501771816" inputmode="tel">
+    <label>📷 Affiche (facultatif)</label>
+    <input id="t-img" type="file" accept="image/*" onchange="apercu(this,'p3')">
+    <img id="p3" class="apercu" hidden>
+    <button onclick="publierT()">Publier</button>
+  </div>
+</div>
+
+<div id="inscription" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('competition')">‹</button><h2 class="hh">Inscription</h2></div>
+  <div class="carte">
+    <h3 id="i-titre"></h3>
+    <p id="i-info"></p>
+    <input id="i-pseudo" placeholder="Ton pseudo eFootball">
+    <input id="i-efid" placeholder="Ton ID eFootball">
+    <input id="i-wa" placeholder="Ton WhatsApp" inputmode="tel">
+    <button class="bleu" onclick="inscrireComp()">Valider et envoyer sur WhatsApp</button>
+  </div>
+</div>
+
+<div id="recharge" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('profil')">‹</button><h2 class="hh">Recharger mon <span class="g">solde</span></h2></div>
+  <div class="bloc gains" style="margin-top:12px"><span class="ico">👛</span><div><small>Solde actuel</small><b id="r-solde" class="prix grand"></b></div></div>
+  <h3>Choisir un montant</h3>
+  <div class="montants" id="montants">
+    <button data-m="1000" onclick="choisirMontant(1000)">1 000 F</button>
+    <button data-m="2000" onclick="choisirMontant(2000)">2 000 F</button>
+    <button data-m="5000" onclick="choisirMontant(5000)">5 000 F</button>
+    <button data-m="10000" onclick="choisirMontant(10000)">10 000 F</button>
+    <button data-m="20000" onclick="choisirMontant(20000)">20 000 F</button>
+    <button data-m="50000" onclick="choisirMontant(50000)">50 000 F</button>
+  </div>
+  <input id="r-montant" type="number" inputmode="numeric" placeholder="Ou un autre montant (min 500 F)" oninput="majMontants()">
+  <h3>Méthode de paiement</h3>
+  <select id="r-op" hidden><option>Orange</option><option>MTN</option><option>Wave</option></select>
+  <div class="methodes">
+    <button class="meth on" data-op="Orange" onclick="choisirOp('Orange')"><i>🟠</i><div><b>Orange Money</b><small>Vérifié par l'organisateur</small></div><span class="radio"></span></button>
+    <button class="meth" data-op="MTN" onclick="choisirOp('MTN')"><i>🟡</i><div><b>MTN Mobile Money</b><small>Vérifié par l'organisateur</small></div><span class="radio"></span></button>
+    <button class="meth" data-op="Wave" onclick="choisirOp('Wave')"><i>🔵</i><div><b>Wave</b><small>Vérifié par l'organisateur</small></div><span class="radio"></span></button>
+    <div class="meth off"><i>💳</i><div><b>Carte bancaire</b><small>Bientôt disponible</small></div><span class="radio"></span></div>
+  </div>
+  <div class="bloc">
+    <p id="r-consigne"></p>
+    <input id="r-ref" placeholder="ID / référence de la transaction">
+    <button onclick="demanderRecharge()">J'ai payé : envoyer ma demande</button>
+  </div>
+  <button class="sec2" onclick="show('remb')">↩️ Récupérer mon solde</button>
+  <h3>Mes recharges</h3>
+  <div id="r-liste"></div>
+</div>
+
+<div id="remb" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('recharge')">‹</button><h2 class="hh">Récupérer mon <span class="g">solde</span></h2></div>
+  <div class="bloc gains" style="margin-top:12px"><span class="ico">👛</span><div><small>Solde disponible</small><b id="rb-solde" class="prix grand"></b></div></div>
+  <div class="carte">
+    <small>L'organisateur te renvoie l'argent par mobile money après vérification. Le montant est alors retiré de ton solde.</small>
+    <input id="rb-montant" type="number" inputmode="numeric" placeholder="Montant à récupérer (min 500 F)">
+    <select id="rb-op"><option>Wave</option><option>MTN</option><option>Orange</option></select>
+    <input id="rb-num" placeholder="Numéro qui recevra l'argent" inputmode="tel">
+    <button onclick="demanderRemb()">Envoyer ma demande</button>
+  </div>
+  <h3>Mes demandes</h3>
+  <div id="rb-liste"></div>
+</div>
+
+<div id="achats" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('profil')">‹</button><h2 class="hh">Mes <span class="g">achats</span></h2></div>
+  <div id="ach" style="margin-top:12px"></div>
+</div>
+
+<div id="retrait" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('vendeur')">‹</button><h2 class="hh">Retirer mes <span class="g">gains</span></h2></div>
+  <div class="carte" style="margin-top:12px">
+    <p id="rt-dispo"></p>
+    <input id="rt-montant" type="number" inputmode="numeric" placeholder="Montant à retirer (en F)">
+    <select id="rt-op"><option>Wave</option><option>MTN</option><option>Orange</option></select>
+    <input id="rt-num" placeholder="Numéro qui recevra l'argent" inputmode="tel">
+    <button onclick="demanderRetrait()">Envoyer ma demande</button>
+  </div>
+</div>
+
+<div id="admin" class="page" hidden>
+  <div class="titre"><button class="back" onclick="show('profil')">‹</button><h2 class="hh">👑 Tableau de <span class="g">bord</span></h2></div>
+  <div id="ad"></div>
+  <div id="ad2"></div>
+</div>
+
+<div id="profil" class="page" hidden>
+  <h2 class="hh">Mon <span class="g">profil</span></h2>
+  <div class="bloc pf-top" id="pf-top"></div>
+  <div class="stats" id="pf-stats"></div>
+  <div class="menu">
+    <button class="mi" onclick="show('achats')"><i>🧾</i><div><b>Mes achats</b><small>Voir l'historique de mes achats</small></div><span>›</span></button>
+    <button class="mi" onclick="show('vendeur')"><i>🛍️</i><div><b>Mes ventes</b><small>Voir mes ventes et gains</small></div><span>›</span></button>
+    <button class="mi" onclick="show('recharge')"><i>👛</i><div><b>Mon portefeuille</b><small>Recharger ou récupérer mon solde</small></div><span>›</span></button>
+    <a class="mi" href="https://wa.me/2250501771816"><i>❓</i><div><b>Aide &amp; Support</b><small>Nous contacter sur WhatsApp</small></div><span>›</span></a>
+    <button class="mi admin-only" onclick="show('admin')"><i>👑</i><div><b>Tableau de bord</b><small>Recharges, séquestre, retraits</small></div><span>›</span></button>
+  </div>
+  <button class="rouge" onclick="deconnecter()">Se déconnecter</button>
+</div>
+
+<div id="vendeur" class="page" hidden>
+  <h2 class="hh">ESPACE <span class="g">VENDEUR</span></h2>
+  <div id="mes"></div>
+</div>
+
+<div id="nav" hidden>
+  <button data-p="accueil" onclick="show('accueil')">🏠<br>Accueil</button>
+  <button data-p="boutique" onclick="show('boutique')">🏪<br>Boutique</button>
+  <button data-p="messages" onclick="show('messages')">💬<br>Messages</button>
+  <button data-p="competition" onclick="show('competition')">🏆<br>Compét.</button>
+  <button data-p="vendeur" onclick="show('vendeur')">📦<br>Vendeur</button>
+</div>
+
+<script>
+window.addEventListener('error',function(e){
+  var d=document.createElement('div');
+  d.style.cssText='background:#ef4444;color:#fff;padding:8px;font-size:12px;margin:4px;position:relative;z-index:99';
+  d.textContent='Erreur : '+(e.message||'')+' ['+String(e.filename||'').split('/').pop()+' ligne '+(e.lineno||'?')+']';
+  document.body.insertBefore(d,document.body.firstChild);
+});
+setTimeout(function(){var c=document.getElementById('chargement');if(c&&!c.hidden)c.innerHTML='<p>Le site n\'a pas démarré. Vérifie ta connexion internet et que les fichiers app.js, app2.js et app3.js sont complets.</p>';},8000);
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="app.js"></script>
+<script src="app2.js"></script>
+<script src="app3.js"></script>
+<!-- FIN index.html -->
